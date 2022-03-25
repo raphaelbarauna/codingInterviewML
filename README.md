@@ -8,7 +8,6 @@ pasta: \coding.interview\target\site\jacoco
 BANCO DE DADOS : H2 (alterar no application.properties) 
 
    - Url LOCALHOST para acesso: http://localhost:8080/h2-console  
-   - http://ec2-3-140-238-45.us-east-2.compute.amazonaws.com:8080/dna/stats
   
    - url: jdbc:h2:mem:mydb
    - username: sa
