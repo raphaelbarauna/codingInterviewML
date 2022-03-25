@@ -19,7 +19,7 @@ ENDPOINTS :
 
 GET :
 
-  - Para retornar estatísticas de verificações de DNA : http://localhost:8080/dna/stats
+  - Para retornar estatísticas de verificações de DNA: http://localhost:8080/dna/stats
 
 retorno: {
           "count_mutant_dna": 2,
@@ -29,7 +29,7 @@ retorno: {
 
 POST :
 
-  - http://localhost:8080/dna/mutant 
+  - Verificar se contém um mutant no array:  http://localhost:8080/dna/mutant 
 
 Payload:  
   {
