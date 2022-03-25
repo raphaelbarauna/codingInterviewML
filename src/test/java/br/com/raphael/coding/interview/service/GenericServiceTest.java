@@ -50,9 +50,16 @@ public class GenericServiceTest {
         List<DNASequence> dnaSequenceList = new ArrayList<>();
         dnaSequenceList.add(DnaSequenceBuilder.createDnaSequence());
         Mockito.when(geneticRepository.findByDnaSequence(anyString())).thenReturn(dnaSequenceList);
-        //Mockito.when(geneticRepository.save(any())).thenReturn(true);
 
         assertTrue(geneticService.isMutant(dna));
+    }
+
+    @Test
+    void testGetDnaResponse(){
+        Mockito.when(geneticRepository.countByIsMutant(true)).thenReturn(10);
+        Mockito.when(geneticRepository.countByIsMutant(false)).thenReturn(5);
+
+        assertEquals(geneticService.getDnaResponse().getRatio(), 2);
     }
 
 

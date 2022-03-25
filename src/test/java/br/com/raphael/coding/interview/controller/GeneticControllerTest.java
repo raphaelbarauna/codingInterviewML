@@ -3,6 +3,7 @@ package br.com.raphael.coding.interview.controller;
 
 import br.com.raphael.coding.interview.builder.DnaSequenceBuilder;
 import br.com.raphael.coding.interview.model.DNARequestDTO;
+import br.com.raphael.coding.interview.model.DNAResponseDTO;
 import br.com.raphael.coding.interview.service.GeneticService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -44,6 +47,17 @@ public class GeneticControllerTest {
         ResponseEntity<String> result = geneticController.isMutant(dnaRequestDTO);
 
         assertEquals(result.getStatusCode(), HttpStatus.FORBIDDEN);
+    }
+
+    @Test
+    void testStatistics(){
+        DNAResponseDTO dnaResponseDTO = DnaSequenceBuilder.createDnaResponseDTO();
+
+        when(geneticService.getDnaResponse()).thenReturn(dnaResponseDTO);
+
+        ResponseEntity<DNAResponseDTO> result = geneticController.statistics();
+
+        assertEquals(Objects.requireNonNull(result.getBody()).getCount_human_dna(), 5);
     }
 
 }

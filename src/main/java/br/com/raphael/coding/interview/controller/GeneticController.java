@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping
+@RequestMapping("dna")
 @Log4j2
 public class GeneticController {
 
@@ -23,14 +23,14 @@ public class GeneticController {
     @PostMapping("/mutant")
     public ResponseEntity<String> isMutant(@Valid @RequestBody DNARequestDTO genetic) {
 
-        Boolean geneticCode = geneticService.isGeneticCode(genetic.getDna());
+        var geneticCode = geneticService.isGeneticCode(genetic.getDna());
 
         if (!geneticCode) {
             log.info("DNA sequences contain incorrect letters. " + genetic);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
 
-        Boolean isMutant = geneticService.isMutant(genetic.getDna());
+        var isMutant = geneticService.isMutant(genetic.getDna());
 
         return isMutant ? ResponseEntity.ok().body(null) : ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
 
