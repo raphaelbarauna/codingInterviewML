@@ -50,6 +50,7 @@ public class GeneticServiceImpl implements GeneticService {
     /**
      * Method to verify if the DNA sequence is from a Mutant
      * also valid if the DNA is already registered, if not, will register.
+     *
      * @param dna
      * @return Boolean
      */
@@ -62,10 +63,10 @@ public class GeneticServiceImpl implements GeneticService {
 
         mutant = dnaList.stream().anyMatch(seq -> lookForSequenceHorizontal(seq) == 3);
 
-        if(!mutant){
-            map.set(invertVerticalToHorizontal(dna));
-
-            mutant = map.get().values().stream().anyMatch(seq -> lookForSequenceHorizontal(seq) == 3);
+        if (!mutant) {
+            //map.set(invertVerticalToHorizontal(dna));
+            mutant = lookForSequenceVertical(dna);
+            //mutant = map.get().values().stream().anyMatch(seq -> lookForSequenceHorizontal(seq) == 3);
         }
 
         String dnaString = String.join("-", dna);
@@ -74,29 +75,39 @@ public class GeneticServiceImpl implements GeneticService {
                 .dnaSequence(dnaString)
                 .isMutant(mutant).build();
 
-        if(geneticRepository.findByDnaSequence(dnaString).size() > 0)
+        log.info(dnaSequence);
+
+        if (geneticRepository.findByDnaSequence(dnaString).size() > 0)
             log.info("This dna has already been registered.");
         else
             geneticRepository.save(dnaSequence);
 
-        log.info(dnaSequence);
-
-
         return mutant;
     }
 
-    public DNAResponseDTO getDnaResponse(){
+    /**
+     * Method to count the number of mutant, human and calculate the ratio.
+     *
+     * @return DNAResponseDTO
+     */
+    public DNAResponseDTO getDnaResponse() {
 
-       int mutant = geneticRepository.countByIsMutant(true);
-       int human = geneticRepository.countByIsMutant(false);
+        int mutant = geneticRepository.countByIsMutant(true);
+        int human = geneticRepository.countByIsMutant(false);
 
         return DNAResponseDTO.builder()
-               .count_human_dna(human)
-               .count_mutant_dna(mutant)
-               .ratio((double) mutant / (double) human)
-               .build();
+                .count_human_dna(human)
+                .count_mutant_dna(mutant)
+                .ratio((double) mutant / (double) human)
+                .build();
     }
 
+    /**
+     * This method will check if the DNA in horizontal is from an Mutant.
+     *
+     * @param s
+     * @return int
+     */
     static int lookForSequenceHorizontal(String s) {
         int count = 0;
         if (s.length() > 0) {
@@ -104,7 +115,7 @@ public class GeneticServiceImpl implements GeneticService {
             for (int windowEnd = 1; windowEnd < s.length(); windowEnd++) {
                 if (letter == s.charAt(windowEnd)) {
                     count++;
-                } else if(count < 3) {
+                } else if (count < 3) {
                     count = 0;
                     letter = s.charAt(windowEnd);
                 }
@@ -113,7 +124,13 @@ public class GeneticServiceImpl implements GeneticService {
         return count;
     }
 
-    static  Map<Integer, String> invertVerticalToHorizontal(String[] dna) {
+    /**
+     * This method will invert the letters from vertical to horizontal and after will check if it's mutant
+     *
+     * @param dna
+     * @return Boolean
+     */
+    static Boolean lookForSequenceVertical(String[] dna) {
 
         Map<Integer, String> newMap = new HashMap<>();
 
@@ -121,16 +138,17 @@ public class GeneticServiceImpl implements GeneticService {
             if (s.length() > 0) {
                 char[] chars = s.toCharArray();
                 for (int windowEnd = 0; windowEnd < chars.length; windowEnd++) {
-                    if(newMap.size() >= chars.length){
-                        newMap.put(windowEnd,  newMap.get(windowEnd).concat(String.valueOf(chars[windowEnd])));
-                    }else {
-                        newMap.put(windowEnd,  String.valueOf(chars[windowEnd]));
+                    if (newMap.size() >= chars.length) {
+                        newMap.put(windowEnd, newMap.get(windowEnd).concat(String.valueOf(chars[windowEnd])));
+                    } else {
+                        newMap.put(windowEnd, String.valueOf(chars[windowEnd]));
                     }
                 }
             }
         });
 
-        return newMap;
+        return newMap.values().stream().anyMatch(seq -> lookForSequenceHorizontal(seq) == 3);
+
     }
 
 }
