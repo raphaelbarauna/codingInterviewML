@@ -7,7 +7,7 @@ pasta: \coding.interview\target\site\jacoco
 
 BANCO DE DADOS : H2 (alterar no application.properties) 
 
-   - Url para acesso: http://localhost:8080/h2-console  
+   - Url LOCALHOST para acesso: http://localhost:8080/h2-console  
   
    - url: jdbc:h2:mem:mydb
    - username: sa
@@ -17,9 +17,10 @@ BANCO DE DADOS : H2 (alterar no application.properties)
 
 ENDPOINTS :
 
-GET :
+GET Para retornar estatísticas de verificações de DNA:
 
-  - Para retornar estatísticas de verificações de DNA: http://localhost:8080/dna/stats
+  - LOCALHOST : http://localhost:8080/dna/stats
+  - Amazon aws: http://ec2-3-140-238-45.us-east-2.compute.amazonaws.com:8080/dna/stats
 
 retorno: {
           "count_mutant_dna": 2,
@@ -27,9 +28,10 @@ retorno: {
           "ratio": 0.5
           }
 
-POST :
+POST Verificar se contém um mutant no array:
 
-  - Verificar se contém um mutant no array:  http://localhost:8080/dna/mutant 
+  - Localhost:  http://localhost:8080/dna/mutant 
+  - Amazon aws: http://ec2-3-140-238-45.us-east-2.compute.amazonaws.com:8080/dna/mutant
 
 Payload:  
   {
