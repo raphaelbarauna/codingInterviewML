@@ -26,8 +26,8 @@ public class GeneticServiceImpl implements GeneticService {
     private GeneticRepository geneticRepository;
 
     /**
-     * Method to valid the DNA sequence, will check if it contains different letters of a DNA sequence.
-     *
+     * Method to valid the DNA sequence, will check if it contains different letters of a DNA sequence and
+     * the size of the DNA sequence.
      * @param dna
      * @return boolean
      */
@@ -64,9 +64,7 @@ public class GeneticServiceImpl implements GeneticService {
         mutant = dnaList.stream().anyMatch(seq -> lookForSequenceHorizontal(seq) == 3);
 
         if (!mutant) {
-            //map.set(invertVerticalToHorizontal(dna));
             mutant = lookForSequenceVertical(dna);
-            //mutant = map.get().values().stream().anyMatch(seq -> lookForSequenceHorizontal(seq) == 3);
         }
 
         String dnaString = String.join("-", dna);
