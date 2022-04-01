@@ -57,7 +57,6 @@ public class GeneticServiceImpl implements GeneticService {
     public Boolean isMutant(String[] dna) {
 
         var dnaList = new ArrayList<>(Arrays.asList(dna));
-        AtomicReference<Map<Integer, String>> map = new AtomicReference<>(new HashMap<>());
 
         boolean mutant;
 
