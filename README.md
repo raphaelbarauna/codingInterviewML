@@ -11,7 +11,7 @@ Usuario: barauna.rafael@gmail.com
 senha: 123456Barauna
 
 - 1 Acessar o link: https://us-east-1.console.aws.amazon.com/ec2/v2/home?region=us-east-1#Instances:
-- 2 Clicar com botão direito na instância e depois conectar.
+- 2 Clicar com botão direito na instância EC2 e depois opção conectar.
 - 3 Após se conectar, executar o comando java -jar coding.interview.jar
 
 BANCO DE DADOS : H2 (alterar no application.properties) 
