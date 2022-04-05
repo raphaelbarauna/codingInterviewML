@@ -5,7 +5,7 @@ Para rodar o projeto basta utilizar o comando : spring-boot:run
 Para testes unitários foi configurado o Jacoco, rodar o comando mvn clean install, após rodar o comando, verificar o arquivo index.html na
 pasta: \coding.interview\target\site\jacoco
 
-OBS: Caso o link da AWS esteja Offline, será necessário iniciar a instância.
+# OBS: Caso o link da AWS esteja Offline, será necessário iniciar a instância.
 
 Usuario: barauna.rafael@gmail.com
 senha: 123456Barauna
